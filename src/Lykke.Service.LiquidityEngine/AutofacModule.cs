@@ -7,6 +7,7 @@ using Lykke.B2c2Client.Settings;
 using Lykke.Sdk;
 using Lykke.Service.Assets.Client;
 using Lykke.Service.Balances.Client;
+using Lykke.Service.Dwh.Client;
 using Lykke.Service.ExchangeOperations.Client;
 using Lykke.Service.LiquidityEngine.Managers;
 using Lykke.Service.LiquidityEngine.Migration;
@@ -34,7 +35,9 @@ namespace Lykke.Service.LiquidityEngine
         {
             builder.RegisterModule(new DomainServices.AutofacModule(
                 _settings.CurrentValue.LiquidityEngineService.Name,
-                _settings.CurrentValue.LiquidityEngineService.WalletId));
+                _settings.CurrentValue.LiquidityEngineService.WalletId,
+                _settings.CurrentValue.LiquidityEngineService.Dwh.DatabaseName,
+                _settings.CurrentValue.LiquidityEngineService.Dwh.StoredProcedures.Trades));
             builder.RegisterModule(new AzureRepositories.AutofacModule(
                 _settings.Nested(o => o.LiquidityEngineService.Db.DataConnectionString)));
             builder.RegisterModule(new PostgresRepositories.AutofacModule(
@@ -69,6 +72,8 @@ namespace Lykke.Service.LiquidityEngine
 
             builder.RegisterB2С2RestClient(new B2C2ClientSettings(_settings.CurrentValue.B2C2Client.Url,
                 _settings.CurrentValue.B2C2Client.AuthorizationToken));
+
+            builder.RegisterLykkeServiceClient(_settings.CurrentValue.DwhServiceClient.ServiceUrl, null);
 
             MatchingEngineClientSettings matchingEngineClientSettings = _settings.CurrentValue.MatchingEngineClient;
 

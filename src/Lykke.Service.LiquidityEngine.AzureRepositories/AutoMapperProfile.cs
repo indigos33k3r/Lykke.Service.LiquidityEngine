@@ -32,7 +32,7 @@ namespace Lykke.Service.LiquidityEngine.AzureRepositories
             CreateMap<CrossRateInstrumentEntity, CrossRateInstrument>(MemberList.Destination);
 
             CreateMap<Instrument, InstrumentEntity>(MemberList.Source)
-                .ForSourceMember(src => src.CrossInstruments, opt => opt.Ignore());
+                .ForSourceMember(src => src.CrossInstruments, opt => opt.DoNotValidate());
             CreateMap<InstrumentEntity, Instrument>(MemberList.Destination)
                 .ForMember(src => src.CrossInstruments, opt => opt.Ignore());
 
@@ -45,11 +45,16 @@ namespace Lykke.Service.LiquidityEngine.AzureRepositories
             CreateMap<Credit, CreditEntity>(MemberList.Source);
             CreateMap<CreditEntity, Credit>(MemberList.Destination);
 
+            CreateMap<ExternalTrade, ExternalTradeEntity>(MemberList.Source);
+            CreateMap<ExternalTradeEntity, ExternalTrade>(MemberList.Destination);
+
             CreateMap<InternalTrade, InternalTradeEntity>(MemberList.Source);
             CreateMap<InternalTradeEntity, InternalTrade>(MemberList.Destination);
 
-            CreateMap<ExternalTrade, ExternalTradeEntity>(MemberList.Source);
-            CreateMap<ExternalTradeEntity, ExternalTrade>(MemberList.Destination);
+            CreateMap<SettlementTrade, SettlementTradeEntity>(MemberList.Source)
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Timestamp));
+            CreateMap<SettlementTradeEntity, SettlementTrade>(MemberList.Destination)
+                .ForMember(dest => dest.Timestamp, opt => opt.MapFrom(src => src.Date));
 
             CreateMap<Position, PositionEntity>(MemberList.Source)
                 .ForMember(dest => dest.Trades, opt => opt.MapFrom(src => src.TradeId));
