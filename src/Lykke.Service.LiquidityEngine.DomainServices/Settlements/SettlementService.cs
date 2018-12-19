@@ -149,6 +149,8 @@ namespace Lykke.Service.LiquidityEngine.DomainServices.Settlements
                 }
             };
 
+            await _settlementTradeService.UpdateAsync(settlementTrade);
+            
             foreach (BalanceOperation balanceOperation in balanceOperations)
             {
                 if (balanceOperation.Amount > 0)
