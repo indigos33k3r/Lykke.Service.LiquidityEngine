@@ -15,6 +15,7 @@ namespace Lykke.Service.LiquidityEngine.Managers
         private readonly ExternalBalancesTimer _externalBalancesTimer;
         private readonly MarketMakerTimer _marketMakerTimer;
         private readonly HedgingTimer _hedgingTimer;
+        private readonly SettlementsTimer _settlementsTimer;
         private readonly LykkeTradeSubscriber _lykkeTradeSubscriber;
         private readonly B2C2QuoteSubscriber _b2C2QuoteSubscriber;
         private readonly B2C2OrderBooksSubscriber _b2C2OrderBooksSubscriber;
@@ -27,6 +28,7 @@ namespace Lykke.Service.LiquidityEngine.Managers
             ExternalBalancesTimer externalBalancesTimer,
             MarketMakerTimer marketMakerTimer,
             HedgingTimer hedgingTimer,
+            SettlementsTimer settlementsTimer,
             LykkeTradeSubscriber lykkeTradeSubscriber,
             B2C2QuoteSubscriber b2C2QuoteSubscriber,
             B2C2OrderBooksSubscriber b2C2OrderBooksSubscriber,
@@ -38,6 +40,7 @@ namespace Lykke.Service.LiquidityEngine.Managers
             _externalBalancesTimer = externalBalancesTimer;
             _marketMakerTimer = marketMakerTimer;
             _hedgingTimer = hedgingTimer;
+            _settlementsTimer = settlementsTimer;
             _lykkeTradeSubscriber = lykkeTradeSubscriber;
             _b2C2QuoteSubscriber = b2C2QuoteSubscriber;
             _b2C2OrderBooksSubscriber = b2C2OrderBooksSubscriber;
@@ -68,6 +71,8 @@ namespace Lykke.Service.LiquidityEngine.Managers
             _marketMakerTimer.Start();
 
             _hedgingTimer.Start();
+            
+            _settlementsTimer.Start();
         }
     }
 }

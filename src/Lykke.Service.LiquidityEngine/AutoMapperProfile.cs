@@ -43,7 +43,8 @@ namespace Lykke.Service.LiquidityEngine
 
             CreateMap<ExternalTrade, ExternalTradeModel>(MemberList.Source);
             CreateMap<InternalTrade, InternalTradeModel>(MemberList.Source);
-
+            CreateMap<SettlementTrade, SettlementTradeModel>(MemberList.Source);
+            
             CreateMap<Position, PositionModel>(MemberList.Source)
                 .ForMember(dest => dest.Trades, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.TradeId)
                     ? new string[0]
@@ -71,8 +72,8 @@ namespace Lykke.Service.LiquidityEngine
             CreateMap<MarketMakerState, MarketMakerStateModel>(MemberList.Source);
 
             CreateMap<Quote, QuoteModel>(MemberList.Source)
-                .ForSourceMember(src => src.Mid, opt => opt.Ignore())
-                .ForSourceMember(src => src.Spread, opt => opt.Ignore());
+                .ForSourceMember(src => src.Mid, opt => opt.DoNotValidate())
+                .ForSourceMember(src => src.Spread, opt => opt.DoNotValidate());
 
             CreateMap<CrossRateInstrument, CrossRateInstrumentModel>(MemberList.Source);
             CreateMap<CrossRateInstrumentModel, CrossRateInstrument>(MemberList.Destination);
