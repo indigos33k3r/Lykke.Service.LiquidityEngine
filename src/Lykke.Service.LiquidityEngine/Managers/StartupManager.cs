@@ -76,6 +76,8 @@ namespace Lykke.Service.LiquidityEngine.Managers
 
             _hedgingTimer.Start();
             
+            _settlementsTimer.Start();
+            
             _lykkeTradeSubscriberMonitor.Start();
             
             _settlementsTimer.Start();
