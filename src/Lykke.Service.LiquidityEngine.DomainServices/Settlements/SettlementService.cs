@@ -121,6 +121,8 @@ namespace Lykke.Service.LiquidityEngine.DomainServices.Settlements
                 throw new InvalidOperationException("Unknown asset");
             }
 
+            settlementTrade.Complete();
+            
             string comment =
                 $"rebalance; {settlementTrade.Type} {settlementTrade.Volume} {settlementTrade.BaseAsset} for {settlementTrade.OppositeVolume} {settlementTrade.QuoteAsset} by price {settlementTrade.Price} ({settlementTrade.AssetPair})";
 
@@ -165,8 +167,6 @@ namespace Lykke.Service.LiquidityEngine.DomainServices.Settlements
 
                 _log.InfoWithDetails("Settlement was executed", balanceOperation);
             }
-
-            settlementTrade.Complete();
 
             await _settlementTradeService.UpdateAsync(settlementTrade);
         }
